@@ -1,0 +1,163 @@
+/*------------------------------
+  POUR LA GESTION DES ERREURS:
+  DONNEE OBLIGATOIRE NON REMPLIE
+  ------------------------------*/
+
+  .input-error {
+    border: 1px solid #e07a5f; /* Rouge adouci */
+    background-color: #fbe3e3; /* Fond plus doux */
+  }
+  
+  p.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+  
+  /* Conteneur du formulaire */
+  .container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  #description,
+  #technologies {
+    resize:none;
+  }
+  
+  /* Titre du formulaire */
+  h2 {
+    font-size: 2rem;
+    color: #bcdcf5;
+    -webkit-text-stroke: 1px #4836ad; /* Épaisseur et couleur du contour */
+    text-transform: uppercase;
+  }
+  
+  /* Formulaire */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Labels */
+  label {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+  }
+  
+  /* Champs de saisie */
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--primary-color);
+    transition: 0.3s ease;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 8px var(--shadow-color);
+    outline: none;
+  }
+  
+  /* Gestion des erreurs */
+  .input-error {
+    border: 2px solid #e07a5f !important;
+    background-color: #fbe3e3;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: left;
+  }
+  
+  /* Boutons */
+  button {
+    background: var(--accent-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background: var(--hover-color);
+  }
+  
+  /* Bouton Annuler */
+  .cancel-button {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .cancel-button:hover {
+    background: var(--border-color);
+  }
+  
+  /* Liste des dates */
+  .dates-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  #dates {
+    width: fit-content;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+  }
+  
+  .date-section input[type="date"] {
+    width: fit-content;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+  }
+  
+  .dates-list li {
+    display: inline-block;
+    width: fit-content;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 5px 10px 5px 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: var(--secondary-color);
+  }
+  
+  @media (max-width: 468px) {
+    .dates-list {
+      text-align: center;
+    }
+    .dates-list li {
+      margin: 5px 5px;
+    }
+  }
+  

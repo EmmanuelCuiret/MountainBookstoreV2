@@ -1,0 +1,369 @@
+/* Palette de couleurs */
+:root {
+  --primary-color: #c5f5cb;
+  --secondary-color: #b0dcff;
+  --accent-color: #4836ad;
+  --background-color: #1f1e1e;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --hover-color: #4836ad;
+  --shadow-color: rgba(255, 62, 0, 0.3);
+}
+
+/* Réinitialisation et typographie globale */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.edit-event-button {
+  align-items: top;
+  margin-bottom: 20px;
+}
+
+/* Conteneur principal de la page EventDetail */
+.event-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style de la carte principale affichant l'événement */
+.event-card,
+.event-card-no-scale,
+.participant-container,
+.participant-card {
+  max-width: 800px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
+}
+
+.event-card-no-scale p:last-of-type {
+  margin-bottom: 0px; /* Ajuste la valeur selon l'espace souhaité */
+}
+
+/* Titres dans la carte d'événement */
+.event-card h1,
+.event-card h2 {
+  margin-bottom: 10px;
+  color: var(--accent-color);
+}
+
+.event-card h1 {
+  font-size: 2rem;
+}
+
+.event-card h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Boutons génériques */
+button {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 10px 5px;
+}
+
+button:hover {
+  background: var(--hover-color);
+}
+
+.buttonX {
+  padding: 8px;
+}
+
+/* Lien stylisé */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--hover-color);
+}
+
+/*L'ajout d'une date à un événement*/
+.input-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Aligne le bouton en haut */
+  gap: 0; /* Espacement entre l'input et le bouton */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.input-button-container button {
+  margin-top: 0px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  align-items: center; /* Aligne verticalement si nécessaire */
+  gap: 2.5px; /* Espace entre les boutons */
+}
+
+/* Style du formulaire de modification dans la carte */
+.form-modif {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-modif .form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.form-modif label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-modif input,
+.form-modif textarea {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-color);
+  transition: border 0.3s ease;
+}
+
+.form-modif input:focus,
+.form-modif textarea:focus {
+  border: 1px solid var(--accent-color);
+  outline: none;
+}
+
+.attendee-form {
+  text-align: center;
+}
+
+/* Gestion des erreurs */
+.input-error {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.availability {
+  /* On organise les éléments horizontalement, avec retour à la ligne si besoin */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.availability p {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.availability label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  width: fit-content; /* La largeur s'ajuste à son contenu */
+  white-space: nowrap; /* Empêche le retour à la ligne du texte */
+}
+/* Section pour l'ajout d'une nouvelle date */
+.date-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.date-section input[type="date"] {
+  width: fit-content;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-color);
+}
+
+.date-section button {
+  margin-left: 10px;
+}
+
+.date-add {
+  margin-top: 20px;
+}
+
+.dates-list {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+  justify-content: center; /* Centre les éléments horizontalement */
+  gap: 10px; /* Espace entre les éléments */
+}
+
+.dates-list li {
+  display: inline-flex; /* Permet à l'élément de prendre la largeur de son contenu */
+  align-items: center; /* Aligne verticalement la case ou le texte s'il y en a un */
+  padding: 8px 12px; /* Espace interne pour un rendu aéré */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  font-size: 1rem;
+  color: var(--secondary-color);
+  /* Optionnel : forcer la largeur au contenu si nécessaire */
+  width: fit-content;
+}
+
+/* Table des participants */
+.participant-table {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.participant-table th,
+.participant-table td {
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  text-align: center;
+}
+
+.participant-table th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}
+
+.participant-section {
+  margin-bottom: 20px;
+  margin-top: -10px;
+  text-align: center;
+  overflow: auto;
+}
+
+/* Section d'édition d'un participant */
+.edit-attendee {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.link-event {
+  color: #bcdcf5;
+  -webkit-text-stroke: 1px #4836ad; /* Épaisseur et couleur du contour */
+}
+
+/* Lien retour */
+.back-link {
+  font-size: 22px;
+  text-align: center;
+}
+
+.back-link a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.back-link a:hover {
+  color: var(--hover-color);
+}
+
+button {
+  display: inline-block; /* Assure que le bouton ne prend que la place nécessaire */
+  width: fit-content;
+  padding: 10px 20px; /* Ajustez le padding selon vos besoins */
+  border-radius: 5px;
+  background: var(--accent-color);
+  color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--hover-color);
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  margin-top: 0px; /* Espace au-dessus du groupe de boutons */
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+  .event-detail-container {
+    padding: 10px;
+  }
+  .event-card h1 {
+    font-size: 1.8rem;
+  }
+  .participant-table th,
+  .participant-table td {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+}
