@@ -1,13 +1,64 @@
 const express = require("express");
 const cors = require("cors");
-const db = require("./db");
-
+const connectDB = require("./config/db");
 const app = express();
+const authMiddleware = require("./middleware/authMiddleware.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const crypting = require("./middleware/crypting.js");
+
 app.use(cors());
 app.use(express.json());
 
+let db;
+
+(async () => {
+  db = await connectDB();
+})();
+
+
+// const password = "becode";
+// const hashedPassword = "$2b$10$sBUql.gubycwytMYtleIPe1uBbEGiIEPStg5ZFka58uy5tFNbAUwG";
+
+// bcrypt.compare(password, hashedPassword).then(result => {
+//   console.log("Mot de passe valide ?", result);
+// });
+
+// (async () => {
+//   const hashedPassword = await crypting.hashPassword("becode");
+//   console.log("Mot de passe hashé:", hashedPassword);
+// })();
+
+
+// 📌 Route de connexion
+app.post("/login", (req, res) => {
+  const { login, password } = req.body;
+
+  // Vérifier si l'utilisateur existe
+  db.query("SELECT * FROM users WHERE login = ?", [login], async (err, results) => {
+      if (err) return res.status(500).json({ error: "Database error" });
+
+      if (results.length === 0) {
+          return res.status(401).json({ error: "Invalid login" });
+      }
+
+      const user = results[0];
+
+      // Vérifier le mot de passe hashé
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+          return res.status(401).json({ error: "Invalid password" });
+      }
+
+      // Générer un token JWT
+      const token = jwt.sign({ userId: user.id, login: user.login }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+      res.json({ token });
+  });
+});
+
 // 📌 Route pour voir la liste des candidats pour un projet en particulier
-app.get("/project/:id/candidates", (req, res) => {
+app.get("/project/:id/candidates", authMiddleware, (req, res) => {
   const projectId = req.params.id;
   
   const sql = `
@@ -42,7 +93,7 @@ app.get("/project/:id/candidates", (req, res) => {
 });
 
 // 📌 Route récupérer un projet en particulier
-app.get("/project/:id", (req, res) => {
+app.get("/project/:id", authMiddleware, (req, res) => {
   const projectId = req.params.id;
   const sql = `
     SELECT 
@@ -67,7 +118,7 @@ app.get("/project/:id", (req, res) => {
 });
 
 // 📌 Route pour supprimer un participant d'un projet
-app.delete("/project/candidate/:id", (req, res) => {
+app.delete("/project/candidate/:id", authMiddleware, (req, res) => {
   const candidateId = req.params.id;
 
   const sql = "DELETE FROM candidates WHERE id = ?";
@@ -86,7 +137,7 @@ app.delete("/project/candidate/:id", (req, res) => {
 });
 
 // 📌 Route pour supprimer un projet
-app.delete("/project/:id", (req, res) => {
+app.delete("/project/:id", authMiddleware, (req, res) => {
   const projectId = req.params.id;
 
   const sql = "DELETE FROM projects WHERE id = ?";
@@ -105,7 +156,7 @@ app.delete("/project/:id", (req, res) => {
 });
 
 // 📌 Route pour mettre à jour un projet en particulier
-app.patch("/project/:id", (req, res) => {
+app.patch("/project/:id", authMiddleware, (req, res) => {
   const projectId = req.params.id;
   const { title, author, description, technologies } = req.body;
   
@@ -131,7 +182,7 @@ app.patch("/project/:id", (req, res) => {
 });
 
 // 📌 Route pour voir la liste des projets
-app.get("/projects", (req, res) => {
+app.get("/projects", authMiddleware, (req, res) => {
   const sql = `
     SELECT 
       p.id, p.title, p.author, 
@@ -151,7 +202,7 @@ app.get("/projects", (req, res) => {
 });
 
 // 📌 Route pour voir la liste des projets et leurs candidats
-app.get("/projects-with-candidates", (req, res) => {
+app.get("/projects-with-candidates", authMiddleware, (req, res) => {
   const sql = `
     SELECT 
       p.id, 
@@ -197,7 +248,7 @@ app.get("/projects-with-candidates", (req, res) => {
 });
 
 // 📌 Route pour ajouter un project
-app.post("/add-project", (req, res) => {
+app.post("/add-project", authMiddleware, (req, res) => {
   const { title, description, author, technologies } = req.body;
 
   if (!title || !description || !author) {
@@ -215,7 +266,7 @@ app.post("/add-project", (req, res) => {
 });
 
 // 📌 Route pour ajouter un candidat à un projet
-app.post("/project/:id/add-candidate", (req, res) => {
+app.post("/project/:id/add-candidate", authMiddleware, (req, res) => {
   const projectId = req.params.id;
   const { candidateName } = req.body;
 

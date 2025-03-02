@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./Home.css";
 import "./Loading.css";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import axiosInstance from "../../axiosInstance";
 
 function Home() {
-  //const baseURL = "http://localhost:3300/";
-  const baseURL = "mountain-bookstore-v2.netlify.app";
+  const baseURL = "http://localhost:3300/";
+  //const baseURL = "mountain-bookstore-v2.netlify.app";
   const [projects, setProjects] = useState([]); // Liste des projets
   const [candidatesAndProjects, setCandidatesAndProjects] = useState({}); // Liste détaillée avec candidats
   const [showCandidates, setShowCandidates] = useState(false); // Basculer entre vues
   const [loadingCandidates, setLoadingCandidates] = useState(false); // État de chargement
 
+  const token = localStorage.getItem("token"); // Récupérer le token stocké
+
   // Chargement des projets au démarrage
   useEffect(() => {
-    axios.get(baseURL + "projects")
+    axiosInstance.get(baseURL + "projects")
       .then((response) => setProjects(response.data))
       .catch(error => console.error("Erreur lors de la récupération des projets:", error));
   }, []);
@@ -26,7 +27,7 @@ function Home() {
   // Charger la liste des projets avec les candidats lorsqu'on clique sur "Afficher candidats"
   const fetchDetailedProjects = () => {
     setLoadingCandidates(true);
-    axios.get(baseURL + "projects-with-candidates")
+    axiosInstance.get(baseURL + "projects-with-candidates")
       .then(response => {
         const formattedData = {};
         response.data.forEach((project) => {
@@ -64,7 +65,7 @@ function Home() {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(baseURL + `project/${project.id}`)
+        axiosInstance.delete(baseURL + `project/${project.id}`)
           .then(() => {
             setProjects(projects.filter(p => p.id !== project.id));
             //Swal.fire("Deleted!", "Your project has been deleted.", "success");
@@ -131,6 +132,11 @@ function Home() {
     doc.save("Mountain_project - Hamilton_10 - Projects_and_candidates.pdf");
   };  
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login"; // Redirection après la déconnexion
+  };
+
   return (
     <>
       <div id="event-card" className="banner">
@@ -139,10 +145,11 @@ function Home() {
           <Link to="add-project">
             <button className="create-event-button">Add a project</button>
           </Link>
+            <button onClick={handleLogout}>Logout</button>
         </div>
 
         <div className="event-grid">
-          {projects.length > 0 ? (
+        {Array.isArray(projects) && projects.length > 0 ? (
             projects.map((project) => (
               <div key={project.id} className="event-card">
                 <h2>

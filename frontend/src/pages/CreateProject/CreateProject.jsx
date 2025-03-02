@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import "./CreateProject.css";
+import axiosInstance from "../../axiosInstance";
 
 const CreateProject = () => {
   const [title, setTitle] = useState("");
@@ -13,8 +13,8 @@ const CreateProject = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-  //const baseURL = "http://localhost:3300/";
-  const baseURL = "mountain-bookstore-v2.netlify.app";
+  const baseURL = "http://localhost:3300/";
+  //const baseURL = "mountain-bookstore-v2.netlify.app";
 
   const sanitizeInput = (value) => value.trim().replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, "");
 
@@ -37,7 +37,7 @@ const CreateProject = () => {
     };
 
     try {
-      await axios.post(baseURL + "add-project", newProject);
+      await axiosInstance.post(baseURL + "add-project", newProject);
       navigate("/");
     } catch (error) {
       console.error("Error creating project :", error);

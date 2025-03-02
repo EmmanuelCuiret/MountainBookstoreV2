@@ -1,14 +1,14 @@
 import React, { use, useEffect, useState } from "react";
-import axios from "axios";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ProjectDetail.css";
 import Swal from "sweetalert2";
+import axiosInstance from "../../axiosInstance";
 
 const ProjectDetail = () => {
 
-  const baseURL = "mountain-bookstore-v2.netlify.app";
-  //const baseURL = "http://localhost:3300/";
+  //const baseURL = "mountain-bookstore-v2.netlify.app";
+  const baseURL = "http://localhost:3300/";
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
   
   const { id } = useParams(); // Récupère l'ID du projet depuis l'URL
@@ -31,12 +31,12 @@ const ProjectDetail = () => {
   const fetchProject = async () => {
     try {
       const routeURL = `project/${id}`;
-      const response = await axios.get(baseURL + routeURL);
+      const response = await axiosInstance.get(baseURL + routeURL);
       setProject(response.data); // Met à jour l'état avec les nouvelles données
 
       try {
         const routeURL2 = `project/${id}/candidates`;
-        const response2 = await axios.get(baseURL + routeURL2);
+        const response2 = await axiosInstance.get(baseURL + routeURL2);
         setCandidates(response2.data); // Met à jour l'état avec les nouvelles données
         console.log(response2.data);
       } catch (error) {
@@ -87,7 +87,7 @@ const ProjectDetail = () => {
     if (!result.isConfirmed) return;
 
     try {
-      await axios.post(baseURL + `project/${id}/add-candidate`, {candidateName: candidateNameForAdd});
+      await axiosInstance.post(baseURL + `project/${id}/add-candidate`, {candidateName: candidateNameForAdd});
       await fetchProject(); // Pour récupérer les données mises à jour
       //toast.success("Candidate added successfully !");
       setCandidateNameForAdd(""); // Réinitialisation du formulaire
@@ -134,7 +134,7 @@ const ProjectDetail = () => {
 
     try {
       const routeURL = `project/${id}`;
-      await axios.patch(baseURL + routeURL, updatedFields);
+      await axiosInstance.patch(baseURL + routeURL, updatedFields);
       //Fusionner les nouvelles données avec l'événement existant
       setProject((prevProject) => ({
         ...prevProject, //Garde les anciennes valeurs
@@ -170,7 +170,7 @@ const ProjectDetail = () => {
     
     try {
       const routeURL = `project/candidate/${candidateId}`;
-      await axios.delete(baseURL + routeURL);
+      await axiosInstance.delete(baseURL + routeURL);
       await fetchProject();
       //toast.success("Candidate successfully deleted!");
     } catch (err) {
