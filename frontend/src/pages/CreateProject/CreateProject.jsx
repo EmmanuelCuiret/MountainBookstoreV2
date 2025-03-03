@@ -94,14 +94,13 @@ const CreateProject = () => {
             rows="3" 
             value={technologies} 
             onChange={(e) => setTechnologies(e.target.value)} 
-            className={isSubmitting && !technologies.trim() ? "input-error" : ""} 
           />
         </div>
 
-        <div className="buttons">
-          <button type="submit">Create</button>
+        <div>
+          <button className="event-button" type="submit">Create</button>
           <Link to="/">
-            <button type="button" className="button">Cancel</button>
+            <button className="event-button" type="button">Cancel</button>
           </Link>
         </div>
       </form>

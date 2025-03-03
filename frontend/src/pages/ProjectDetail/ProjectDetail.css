@@ -45,7 +45,7 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: left;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
 }
 
@@ -158,7 +158,7 @@ a:hover {
 
 .form-modif input,
 .form-modif textarea {
-  padding: 10px;
+  padding: 5px;
   border: 1px solid var(--border-color);
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.1);
@@ -275,7 +275,7 @@ a:hover {
 }
 
 .participant-table th {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   font-weight: bold;
 }
 

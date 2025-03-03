@@ -9,8 +9,8 @@
   justify-content: center;
   align-items: center;
   background: url("/clouds.jpg") repeat-y;
-  opacity: 0.6;
-  animation: moveClouds 800s linear infinite;
+  opacity: 0.7;
+  animation: moveClouds 1000s linear infinite;
 }
 
 /* Conteneur du spinner et du texte */

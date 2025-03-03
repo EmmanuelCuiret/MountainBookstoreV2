@@ -1,0 +1,36 @@
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+p.error-message {
+    color: #721c24; /* Rouge foncé pour le texte */
+    background-color: #f8d7da; /* Rouge clair en fond */
+    border: 1px solid #f5c6cb; /* Bordure subtile */
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Icône d'alerte (optionnel, si tu utilises FontAwesome) */
+  p.error-message::before {
+    content: "⚠️"; /* Emoji d'alerte */
+    font-size: 1rem;
+  }
+  
