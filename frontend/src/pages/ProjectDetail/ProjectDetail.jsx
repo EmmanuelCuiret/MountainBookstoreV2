@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 import axiosInstance from "../../axiosInstance";
 
 const ProjectDetail = () => {
-  //const baseURL = "mountain-bookstore-v2.netlify.app";
-  const baseURL = "http://localhost:3300/";
+
+  const baseURL = "https://mountainbookstorev2.onrender.com/";
+  //const baseURL = "http://localhost:3300/";
+  
   const sanitizeInput = (value) =>
     value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
 

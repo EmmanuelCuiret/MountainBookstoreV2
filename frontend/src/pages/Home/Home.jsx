@@ -8,8 +8,10 @@ import autoTable from "jspdf-autotable";
 import axiosInstance from "../../axiosInstance";
 
 function Home() {
-  const baseURL = "http://localhost:3300/";
-  //const baseURL = "mountain-bookstore-v2.netlify.app";
+  
+  const baseURL = "https://mountainbookstorev2.onrender.com/";
+  //const baseURL = "http://localhost:3300/";
+
   const [projects, setProjects] = useState([]); // Liste des projets
   const [candidatesAndProjects, setCandidatesAndProjects] = useState({}); // Liste détaillée avec candidats
   const [showCandidates, setShowCandidates] = useState(false); // Basculer entre vues
