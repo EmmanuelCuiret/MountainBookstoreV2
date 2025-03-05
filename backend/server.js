@@ -308,6 +308,7 @@ app.post("/project/:id/add-candidate", authMiddleware, (req, res) => {
   });
 });
 
-app.listen(3300, () => {
-  console.log("Backend server on http://localhost:3300");
+const PORT = process.env.PORT || 3300;
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
 });
