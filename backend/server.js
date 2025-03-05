@@ -7,7 +7,18 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypting = require("./middleware/crypting.js");
 
-app.use(cors());
+const allowedOrigins = ["http://localhost:5173", "https://https://mountain-bookstore-v3.netlify.app"];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS non autorisé"));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 let db;
@@ -36,31 +47,31 @@ app.post("/login", (req, res) => {
 
   // Vérifier si l'utilisateur existe
   db.query("SELECT * FROM users WHERE login = ?", [login], async (err, results) => {
-      if (err) return res.status(500).json({ error: "Database error" });
+    if (err) return res.status(500).json({ error: "Database error" });
 
-      if (results.length === 0) {
-          return res.status(401).json({ error: "Invalid login" });
-      }
+    if (results.length === 0) {
+      return res.status(401).json({ error: "Invalid login" });
+    }
 
-      const user = results[0];
+    const user = results[0];
 
-      // Vérifier le mot de passe hashé
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-          return res.status(401).json({ error: "Invalid password" });
-      }
+    // Vérifier le mot de passe hashé
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
 
-      // Générer un token JWT
-      const token = jwt.sign({ userId: user.id, login: user.login }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Générer un token JWT
+    const token = jwt.sign({ userId: user.id, login: user.login }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-      res.json({ token });
+    res.json({ token });
   });
 });
 
 // 📌 Route pour voir la liste des candidats pour un projet en particulier
 app.get("/project/:id/candidates", authMiddleware, (req, res) => {
   const projectId = req.params.id;
-  
+
   const sql = `
  select * from (SELECT 
  	  p.id as id,
@@ -81,13 +92,13 @@ app.get("/project/:id/candidates", authMiddleware, (req, res) => {
 
     ORDER BY candidate_id IS NULL DESC, candidate_id;
   `;
-  
+
   db.query(sql, [projectId, projectId], (err, results) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
     }
-    
+
     res.json(results);
   });
 });
@@ -107,12 +118,12 @@ app.get("/project/:id", authMiddleware, (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    
+
     if (results.length === 0) {
       res.status(404).json({ error: "Project not found" });
       return;
     }
-    
+
     res.json(results[0]);
   });
 });
@@ -159,24 +170,24 @@ app.delete("/project/:id", authMiddleware, (req, res) => {
 app.patch("/project/:id", authMiddleware, (req, res) => {
   const projectId = req.params.id;
   const { title, author, description, technologies } = req.body;
-  
+
   const sql = `
     UPDATE projects
     SET title = ?, author = ?, description = ?, technologies = ?
     WHERE id = ?
   `;
-  
+
   db.query(sql, [title, author, description, technologies, projectId], (err, result) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
     }
-    
+
     if (result.affectedRows === 0) {
       res.status(404).json({ error: "Project not found" });
       return;
     }
-    
+
     res.json({ message: "Project updated successfully" });
   });
 });
