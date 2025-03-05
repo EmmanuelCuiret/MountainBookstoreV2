@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypting = require("./middleware/crypting.js");
 
-const allowedOrigins = ["http://localhost:5173", "https://https://mountain-bookstore-v3.netlify.app"];
+const allowedOrigins = ["http://localhost:5173", "https://mountain-bookstore-v3.netlify.app"];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -20,6 +20,18 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+// Gérer les requêtes OPTIONS
+app.options("*", (req, res) => {
+  res.sendStatus(204);
+});
 
 let db;
 
