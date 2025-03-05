@@ -15,8 +15,8 @@ function Home() {
   const [showCandidates, setShowCandidates] = useState(false); // Basculer entre vues
   const [loadingCandidates, setLoadingCandidates] = useState(false); // État de chargement
 
-  const baseURL = "http://localhost:3300/";
-  //const baseURL = "https://mountainbookstorev2-1.onrender.com/";
+  //const baseURL = "http://localhost:3300/";
+  const baseURL = "https://mountainbookstorev2-1.onrender.com/";
 
   const token = localStorage.getItem("token"); // Récupérer le token stocké
 

@@ -7,8 +7,8 @@ import axiosInstance from "../../axiosInstance";
 
 const ProjectDetail = () => {
 
-  const baseURL = "http://localhost:3300/";
-  //const baseURL = "https://mountainbookstorev2-1.onrender.com/";
+  //const baseURL = "http://localhost:3300/";
+  const baseURL = "https://mountainbookstorev2-1.onrender.com/";
   
   const sanitizeInput = (value) =>
     value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
