@@ -7,15 +7,16 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import axiosInstance from "../../axiosInstance";
 
+
 function Home() {
   
-  const baseURL = "https://mountainbookstorev2.onrender.com/";
-  //const baseURL = "http://localhost:3300/";
-
   const [projects, setProjects] = useState([]); // Liste des projets
   const [candidatesAndProjects, setCandidatesAndProjects] = useState({}); // Liste détaillée avec candidats
   const [showCandidates, setShowCandidates] = useState(false); // Basculer entre vues
   const [loadingCandidates, setLoadingCandidates] = useState(false); // État de chargement
+
+  const baseURL = "http://localhost:3300/";
+  //const baseURL = "https://mountainbookstorev2-1.onrender.com/";
 
   const token = localStorage.getItem("token"); // Récupérer le token stocké
 
