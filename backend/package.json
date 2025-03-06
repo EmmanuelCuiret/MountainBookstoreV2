@@ -6,7 +6,7 @@
   "license": "ISC",
   "author": "EmmanuelCuiret",
   "type": "commonjs",
-  "main": "db.js",
+  "main": "server.js",
   "engines": {
     "node": "18.x"
   },
